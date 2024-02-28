@@ -4,11 +4,11 @@ import { Medal } from "lucide-react";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import Link from "next/link";
-const textFont = Poppins({
+const textFont      = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
-const headingFont = localFont({
+const headingFont   = localFont({
   src: "../../public/fonts/font.woff2",
 });
 const MarketingPage = () => {
@@ -39,7 +39,7 @@ const MarketingPage = () => {
         accomplish it all with Taskify.
       </div>
       <Button className="mt-6" size="lg">
-        <Link href="/signup">Get Taskify for free</Link>
+        <Link href="/sign-up">Get Taskify for free</Link>
       </Button>
     </div>
   );

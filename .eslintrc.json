@@ -8,6 +8,7 @@
   "rules": {
     "align-assignments/align-assignments": [2, { "requiresOnly": false }],
     "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "warn",
     "react/self-closing-comp": [
       "error",
       {

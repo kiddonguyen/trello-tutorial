@@ -28,6 +28,7 @@ export async function generateMetadata({
     title: board?.title || "Board",
   };
 }
+
 interface BoardIdLayoutProps {
   children: React.ReactNode;
   params: { boardId: string };

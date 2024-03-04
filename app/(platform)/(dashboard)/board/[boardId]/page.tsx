@@ -7,9 +7,11 @@ interface BoardIdPageProps {
 }
 const BoardIdPage = async ({ params }: BoardIdPageProps) => {
   const { orgId } = auth();
+  
   if (!orgId) {
     redirect("/select-org");
   }
+  
   const lists = await db.list.findMany({
     where: {
       boardId: params.boardId,

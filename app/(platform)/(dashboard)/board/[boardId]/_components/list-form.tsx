@@ -55,6 +55,7 @@ export const ListForm = () => {
 
   useEventListener("keydown", onKeyDown);
   useOnClickOutside(formRef, disableEditing);
+  
   if (isEditing) {
     return (
       <ListWrapper>

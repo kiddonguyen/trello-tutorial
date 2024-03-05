@@ -50,7 +50,7 @@ export const ListOptions = ({ data, onAddCard }: ListOptionsProps) => {
   };
 
   const onCopy = (formData: FormData) => {
-    const id = formData.get("id") as string;
+    const id      = formData.get("id") as string;
     const boardId = formData.get("boardId") as string;
     executeCopy({ id, boardId });
   };

@@ -38,9 +38,9 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
     },
     ref
   ) => {
-    const { pending } = useFormStatus()
+    const { pending } = useFormStatus();
     return (
-      <div className="space-y-2 w-full">
+      <div className="w-full space-y-2">
         <div className="space-y-1 w-full">
           {label ? (
             <Label
@@ -67,8 +67,8 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             aria-describedby={`${id}-error`}
             defaultValue={defaultValue}
           />
+          <FormErrors id={id} errors={errors} />
         </div>
-        <FormErrors id={id} errors={errors} />
       </div>
     );
   }

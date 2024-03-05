@@ -59,26 +59,28 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
     };
 
     if (isEditing) {
-      <form
-        action={onSubmit}
-        ref={formRef}
-        className="m-1 py-0.5 px-1 space-x-4"
-      >
-        <FormTextarea
-          ref={ref}
-          placeholder="Enter a title for this card"
-          id="title"
-          onKeyDown={onTextareaKeydown}
-          errors={fieldErrors}
-        />
-        <input type="hidden" name="listId" id="listId" value={listId} />
-        <div className="flex items-center gap-x-1">
-          <FormSubmit>Add card</FormSubmit>
-          <Button onClick={disableEditing} size="sm" variant="ghost">
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-      </form>;
+      return (
+        <form
+          action={onSubmit}
+          ref={formRef}
+          className="m-1 py-0.5 px-1 space-x-4"
+        >
+          <FormTextarea
+            ref={ref}
+            placeholder="Enter a title for this card"
+            id="title"
+            onKeyDown={onTextareaKeydown}
+            errors={fieldErrors}
+          />
+          <input type="hidden" name="listId" id="listId" value={listId} />
+          <div className="flex items-center gap-x-1">
+            <FormSubmit>Add card</FormSubmit>
+            <Button onClick={disableEditing} size="sm" variant="ghost">
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+        </form>
+      );
     }
     return (
       <div className="pt-2 px-2">

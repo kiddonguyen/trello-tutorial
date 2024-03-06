@@ -6,7 +6,8 @@ import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { CopyList } from "./schema";
 import { InputType, ReturnType } from "./types";
-
+import { createAuditLog } from "@/lib/create-audit-log";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
 
@@ -46,7 +47,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
     const newOrder = lastList ? lastList.order + 1 : 1;
-    list           = await db.list.create({
+    list = await db.list.create({
       data: {
         boardId: listToCopy.boardId,
         title: `${listToCopy.title} - Copy`,
@@ -63,7 +64,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
       include: {
         cards: true,
-      }
+      },
     });
     if (!listToCopy) {
       return { error: "List not found!" };
@@ -73,6 +74,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Failed to copy!",
     };
   }
+
+  createAuditLog({
+    entityId: list.id,
+    entityTitle: list.title,
+    entityType: ENTITY_TYPE.LIST,
+    action: ACTION.CREATE,
+  });
 
   revalidatePath(`/board/${boardId}`);
   return { data: list };

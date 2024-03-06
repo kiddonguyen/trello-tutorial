@@ -8,6 +8,8 @@ import { db } from "@/lib/db";
 
 import { CreateCard } from "./schema";
 import { InputType, ReturnType } from "./types";
+import { createAuditLog } from "@/lib/create-audit-log";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -53,6 +55,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
+    createAuditLog({
+      entityId: card.id,
+      entityTitle: card.title,
+      entityType: ENTITY_TYPE.CARD,
+      action: ACTION.CREATE,
+    })
   } catch (error) {
     return {
       error: "Failed to create.",

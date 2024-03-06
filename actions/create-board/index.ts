@@ -13,9 +13,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Unauthorized",
     };
   }
-  const { title, image }                                                     = data;
+
+  const { title, image } = data;
+
   const [imageId, imageThumbUrl, imageFullUrl, imageUsername, imageLinkHTML] =
     image.split("|");
+
   if (
     !imageId ||
     !imageThumbUrl ||

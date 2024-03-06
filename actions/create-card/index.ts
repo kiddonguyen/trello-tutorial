@@ -1,9 +1,11 @@
 "use server";
 
-import { createSafeAction } from "@/lib/create-safe-action";
-import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
+
+import { createSafeAction } from "@/lib/create-safe-action";
+import { db } from "@/lib/db";
+
 import { CreateCard } from "./schema";
 import { InputType, ReturnType } from "./types";
 
@@ -28,40 +30,32 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         },
       },
     });
-    
-    // Find the list that we want to add the card
+
     if (!list) {
-      return {error: "List not found"};
+      return {
+        error: "List not found",
+      };
     }
 
-    // Find the last card
-    const lastCard = await db.card.findFirst(
-      {
-        where: {
-          listId
-        },
-        orderBy: {
-          order: "desc",
-        },
-        select: {
-          order: true,
-        }
-      }
-    );
+    const lastCard = await db.card.findFirst({
+      where: { listId },
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
 
-    // Order of the new card
-    const newOrder = lastCard ? lastCard.order + 1 : 0;
+    const newOrder = lastCard ? lastCard.order + 1 : 1;
 
     card = await db.card.create({
       data: {
-        listId,
         title,
-        order: newOrder
-      }
-    })
+        listId,
+        order: newOrder,
+      },
+    });
+
   } catch (error) {
     return {
-      error: "Failed to create!",
+      error: "Failed to create.",
     };
   }
 

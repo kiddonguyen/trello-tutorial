@@ -1,30 +1,33 @@
 "use client";
 
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { ElementRef, useRef, useState } from "react";
+
 import { cn } from "@/lib/utils";
 import { ListWithCards } from "@/types";
-import { ElementRef, useRef, useState } from "react";
+
 import { CardForm } from "./card-form";
 import { CardItem } from "./card-item";
 import { ListHeader } from "./list-header";
-import { Droppable, Draggable } from "@hello-pangea/dnd";
 
 interface ListItemProps {
   data: ListWithCards;
   index: number;
 }
+
 export const ListItem = ({ data, index }: ListItemProps) => {
   const textareaRef = useRef<ElementRef<"textarea">>(null);
-  const [isEditing, setEditing] = useState(false);
+
+  const [isEditing, setIsEditing] = useState(false);
 
   const disableEditing = () => {
-    setEditing(false);
+    setIsEditing(false);
   };
 
   const enableEditing = () => {
-    setEditing(true);
+    setIsEditing(true);
     setTimeout(() => {
       textareaRef.current?.focus();
-      textareaRef.current?.select();
     });
   };
 
@@ -40,7 +43,7 @@ export const ListItem = ({ data, index }: ListItemProps) => {
             {...provided.dragHandleProps}
             className="w-full rounded-md bg-[#f1f2f4] shadow-md pb-2"
           >
-            <ListHeader data={data} onAddCard={enableEditing} />
+            <ListHeader onAddCard={enableEditing} data={data} />
             <Droppable droppableId={data.id} type="card">
               {(provided) => (
                 <ol
@@ -51,8 +54,8 @@ export const ListItem = ({ data, index }: ListItemProps) => {
                     data.cards.length > 0 ? "mt-2" : "mt-0"
                   )}
                 >
-                  {data.cards.map((card) => (
-                    <CardItem key={card.id} index={index} data={card} />
+                  {data.cards.map((card, index) => (
+                    <CardItem index={index} key={card.id} data={card} />
                   ))}
                   {provided.placeholder}
                 </ol>

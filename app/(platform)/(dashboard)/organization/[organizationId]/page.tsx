@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Suspense } from "react";
 import { BoardList } from "./_components/board-list";
-import { Info } from "./info";
+import { Info } from "./_components/info";
 const OrganizationIdPage = async () => {
   return (
     <div className="w-full mb-20">

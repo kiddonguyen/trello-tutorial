@@ -25,6 +25,11 @@ export const Header = ({ data }: HeaderProps) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["card-logs", data.id],
+      });
+
       toast.success(`Renamed to "${data.title}"!`);
       setTitle(data.title);
     },
@@ -49,25 +54,24 @@ export const Header = ({ data }: HeaderProps) => {
 
   return (
     <div className="flex items-start gap-x-3 mb-6 w-full">
-      <Layout className="w-5 h-5 mt-1 text-neutral-700">
-        <div className="w-full">
-          <form action={onSubmit}>
-            <FormInput
-              id="title"
-              ref={inputRef}
-              onBlur={onBlur}
-              defaultValue={title}
-              className="font-semibold text-xl px-1 text-neutral-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-0.5 truncate"
-            />
-          </form>
-          <p>
-            in list{" "}
-            <span className="text-sm text-muted-foreground underline">
-              {data.list.title}
-            </span>
-          </p>
-        </div>
-      </Layout>
+      <Layout className="w-5 h-5 mt-1 text-neutral-700" />
+      <div className="w-full">
+        <form action={onSubmit}>
+          <FormInput
+            id="title"
+            ref={inputRef}
+            onBlur={onBlur}
+            defaultValue={title}
+            className="font-semibold text-xl px-1 text-neutral-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-0.5 truncate"
+          />
+        </form>
+        <p>
+          in list{" "}
+          <span className="text-sm text-muted-foreground underline">
+            {data.list.title}
+          </span>
+        </p>
+      </div>
     </div>
   );
 };

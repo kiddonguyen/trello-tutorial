@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-action";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { ElementRef, useRef } from "react";
@@ -29,6 +30,7 @@ export const FormPopover = ({
   sideOffset = 0,
 }: FormPopoverProps) => {
   const router                   = useRouter();
+  const proModal                 = useProModal();
   const closeRef                 = useRef<ElementRef<"button">>(null);
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
@@ -37,8 +39,8 @@ export const FormPopover = ({
       router.push(`/board/${data.id}`);
     },
     onError: (error) => {
-      console.log({ error });
       toast.error(error);
+      proModal.onOpen();
     },
   });
   const onSubmit                 = (formData: FormData) => {

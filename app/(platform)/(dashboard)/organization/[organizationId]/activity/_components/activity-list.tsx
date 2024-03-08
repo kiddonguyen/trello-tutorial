@@ -4,9 +4,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-interface ActivityListProps {}
-
-export const ActivityList = async ({}: ActivityListProps) => {
+export const ActivityList = async () => {
   const { orgId } = auth();
 
   if (!orgId) {

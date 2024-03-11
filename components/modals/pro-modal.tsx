@@ -1,14 +1,15 @@
 "use client";
 
+import { stripeRedirect } from "@/actions/stripe-redirect";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useAction } from "@/hooks/use-action";
 import { useProModal } from "@/hooks/use-pro-modal";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { useAction } from "@/hooks/use-action";
-import { stripeRedirect } from "@/actions/stripe-redirect";
+import { toast } from "sonner";
 
 export const ProModal = () => {
-  const proModal = useProModal();
+  const proModal               = useProModal();
   const { execute, isLoading } = useAction(stripeRedirect, {
     onSuccess: (data) => {
       window.location.href = data;

@@ -81,7 +81,7 @@ export const hasAvailableCount = async () => {
     },
   });
 
-  if (orgLimit && orgLimit.count < MAX_FREE_BOARDS) {
+  if (!orgLimit || orgLimit.count < MAX_FREE_BOARDS) {
     return true;
   } else {
     return false;

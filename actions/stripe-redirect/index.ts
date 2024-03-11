@@ -1,16 +1,20 @@
 "use server";
+
+import { auth, currentUser } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
+
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
-import { stripe } from "@/lib/stripe";
-import { absoluteUrl } from "@/lib/utils";
-import { auth, currentUser } from "@clerk/nextjs";
+
 import { StripeRedirect } from "./schema";
 import { InputType, ReturnType } from "./types";
-import { revalidatePath } from "next/cache";
+
+import { stripe } from "@/lib/stripe";
+import { absoluteUrl } from "@/lib/utils";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
-  const user = await currentUser();
+  const user              = await currentUser();
 
   if (!userId || !orgId || !user) {
     return {
@@ -47,7 +51,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         line_items: [
           {
             price_data: {
-              currency: "usd",
+              currency: "USD",
               product_data: {
                 name: "Taskify Pro",
                 description: "Unlimited boards for your organization",
@@ -67,12 +71,14 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
       url = stripeSession.url || "";
     }
-  } catch (error) {
-    return { error: "Something went wrong!" };
+  } catch {
+    return {
+      error: "Something went wrong!",
+    };
   }
 
   revalidatePath(`/organization/${orgId}`);
-  return {data: url};
+  return { data: url };
 };
 
 export const stripeRedirect = createSafeAction(StripeRedirect, handler);

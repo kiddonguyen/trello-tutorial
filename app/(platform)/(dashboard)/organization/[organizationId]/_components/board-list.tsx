@@ -2,7 +2,6 @@ import { FormPopover } from "@/components/form/form-popover";
 import { Hint } from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MAX_FREE_BOARDS } from "@/constants/board";
-import { MAX_FREE_BOARDS } from "@/constants/board";
 import { db } from "@/lib/db";
 import { getAvailableCount } from "@/lib/org-limits";
 import { checkSubscription } from "@/lib/subscription";
